@@ -1,4 +1,4 @@
 @echo off
 cd\
-cd %windir%\system32\saraupd
-upd_sara.cmd
+cd %windir%\system32\sra.upd
+upd_sra.cmd

@@ -1,4 +1,4 @@
-REM SCRIPT - Atualizacao SARA
+REM SCRIPT - Atualizacao xpto
 
 find /I "%1" sucesso.txt
 if %errorlevel% == 0 goto sair
@@ -19,8 +19,8 @@ for /F "skip=1 tokens=3" %%b in (count2.tmp) do set ok=%%b
 set /A ok*=100
 set /A ok/=%total%
 if %ok% LEQ 49 goto erro
-findstr /I "%1" D:\Projet~1\bck\bdx.txt>saraprod.tmp
-for /F "tokens=4 delims=_" %%c in (saraprod.tmp) do call gera.cmd %%c
+findstr /I "%1" D:\Projet~1\bck\bdx.txt>xptoprod.tmp
+for /F "tokens=4 delims=_" %%c in (xptoprod.tmp) do call gera.cmd %%c
 goto sair
 
 :erro

@@ -1,4 +1,4 @@
 @echo off
-findstr /x "%1" saraprod.txt
+findstr /x "%1" xptoprod.txt
 if %errorlevel% == 0 goto sair
-echo %1>>saraprod.txt
+echo %1>>xptoprod.txt

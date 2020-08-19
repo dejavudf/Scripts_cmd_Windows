@@ -1,12 +1,12 @@
 @echo off
 regedit /s rmv_vdd.reg
-REM SDIS - v3.9.1 Build 3.4.6
+REM SDIS - v3.7
 REM AC/DESAN/DSET
-set path=%path%;%windir%\system32;%windir%;%windir%\system32\saraupd
+set path=%path%;%windir%\system32;%windir%;%windir%\system32\xptoupd
 
 REM checar instancia - existencia de outro processo ja rodando
 pv cmd.exe -l>ps.tmp
-findstr /I "Upd_SARA.cmd" ps.tmp>ps2.tmp
+findstr /I "Upd_xpto.cmd" ps.tmp>ps2.tmp
 wc ps2.tmp>run.tmp
 for /F "tokens=8" %%a in (run.tmp) do set num_linha=%%a
 if %num_linha% GEQ 3 exit
@@ -21,8 +21,8 @@ REM - Inicializa Variaveis
 set sto=00000000
 set macadress=000000000000
 set ip=0.0.0.0
-set ok_sara=0
-set ok_scada=0
+set ok_xpto=0
+set ok_xpto=0
 set ok_bp=0
 set dl_ok=0
 set srv_upd=sac0167
@@ -49,10 +49,10 @@ ping %srv_upd% -n 20 | find "TTL"
 if not %errorlevel% == 0 goto erro_png
 goto tst_usr
 
-REM - Verifica Existencia da conta(profile) BANCOPOSTAL
+REM - Verifica Existencia da conta(profile) xpto
 :tst_usr
 set bp_usr=1
-if not exist "%systemdrive%\Documents and Settings\BancoPostal\ntuser.dat" set bp_usr=0
+if not exist "%systemdrive%\Documents and Settings\xpto\ntuser.dat" set bp_usr=0
 goto tst_upd
 
 REM - Verifica Existencia de Atualizacao
@@ -119,17 +119,7 @@ getip %computername%>ip.tmp
 for /F "tokens=1" %%f in (ip.tmp) do set ip=%%f
 set sto=00000000
 for /F "tokens=1 delims=_" %%g in (bdlocal.tmp) do set sto=%%g
-set num_loop=1
-goto gera_log
-
-REM - Geracao final de logs
-:gera_log
-if %num_loop% == 12 exit
-echo >\\%srv_upd%\logs\%sto%_%macadress%_%computername%_%ip%_%dl_ok%_%ok_bp%_%ok_sara%_%ok_scada%
-sleep 300
-set /A num_loop+=1
-if not exist "\\%srv_upd%\logs\%sto%_%macadress%_%computername%_%ip%_%dl_ok%_%ok_bp%_%ok_sara%_%ok_scada%" goto gera_log
+if not "%computername%" == "" echo >\\%srv_upd%\logs\%sto%_%macadress%_%computername%_%ip%_%dl_ok%_%ok_bp%_%ok_xpto%_%ok_xpto%
 exit
-
 
 
